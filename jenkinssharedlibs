@@ -1,0 +1,73 @@
+@Library('sharedlibmss') _
+
+pipeline{
+
+agent any
+
+stages{
+
+stage('CheckoutCode'){
+
+steps{
+
+git credentialsId: '789f4102-bf6f-4cbd-b534-34772e10cd8c', url: 'https://github.com/ritishreddy/nodejs-app-mss.git'
+
+}
+}
+
+stage('Build'){
+steps{
+sh "mvn clean package"
+}
+}
+}//stages
+
+post {
+  always {
+   sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  unstable {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  notBuilt {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  cleanup {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  regression {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  aborted {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  success {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  failure {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  unsuccessful {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  fixed {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+  changed {
+  sendSlackNotifications(currentBuild.result)
+    // One or more steps need to be included within each condition's block.
+  }
+}
+
+
+}//pipeline
